@@ -16,7 +16,8 @@
 
 package de.codecentric.reactiveflows.reactiveflows
 
-import akka.testkit.EventFilter
+import akka.actor.{ ActorIdentity, Identify }
+import akka.testkit.{ TestProbe, EventFilter }
 
 class ReactiveFlowSpec extends BaseAkkaSpec {
 
@@ -28,7 +29,14 @@ class ReactiveFlowSpec extends BaseAkkaSpec {
     }
 
     "result in creating a FlowFacade child actor" in {
-      pending
+      val sender: TestProbe = TestProbe()
+      implicit val senderRef = sender.ref
+
+      val reactiveFlows = system.actorOf(ReactiveFlows.props)
+      sender.awaitAssert {
+        system.actorSelection(reactiveFlows.path / FlowFacade.Name) ! Identify(None)
+        sender.expectMsgPF() { case ActorIdentity(_, Some(_)) => () }
+      }
     }
   }
 }
