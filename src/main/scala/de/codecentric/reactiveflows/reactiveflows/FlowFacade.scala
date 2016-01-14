@@ -18,14 +18,14 @@ package de.codecentric.reactiveflows.reactiveflows
 
 import akka.actor.{ Props, Actor, ActorLogging }
 
-object ReactiveFlows {
-  final val Name = "reactive-flows"
-  def props: Props = Props(new ReactiveFlows)
+object FlowFacade {
+  final val Name = "flow-facade";
+
+  def props: Props = Props(new FlowFacade)
 }
 
-class ReactiveFlows extends Actor with ActorLogging {
-  log.info("Up and running")
-  context.actorOf(FlowFacade.props, FlowFacade.Name)
+class FlowFacade extends Actor with ActorLogging {
 
   override def receive: Receive = Actor.emptyBehavior
+
 }

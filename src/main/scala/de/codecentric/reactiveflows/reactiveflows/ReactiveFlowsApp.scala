@@ -25,7 +25,7 @@ object ReactiveFlowsApp {
 
   def main(args: Array[String]): Unit = {
     val system = ActorSystem("reactiveflow-system")
-    system.actorOf(ReactiveFlows.props, "reactiveflows")
+    system.actorOf(ReactiveFlows.props, ReactiveFlows.Name)
     Await.ready(system.whenTerminated, Duration.Inf)
   }
 }

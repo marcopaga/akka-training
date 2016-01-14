@@ -21,6 +21,7 @@ unmanagedSourceDirectories.in(Test)    := List(scalaSource.in(Test).value)
 val akkaVersion = "2.4.1"
 libraryDependencies ++= List(
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+  "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
   "org.scalacheck" %% "scalacheck" % "1.12.5" % "test",
   "org.scalatest"  %% "scalatest"  % "2.2.6"  % "test"
 )
