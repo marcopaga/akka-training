@@ -18,7 +18,8 @@ package de.codecentric.reactiveflows.reactiveflows
 
 import java.net.URLEncoder
 
-import akka.actor.{ Props, Actor, ActorLogging }
+import akka.actor.{ ActorRef, Props, Actor, ActorLogging }
+import de.codecentric.reactiveflows.reactiveflows.Flow.Message
 import de.codecentric.reactiveflows.reactiveflows.FlowFacade._
 
 object FlowFacade {
@@ -41,6 +42,10 @@ object FlowFacade {
   case class FlowRemoved(name: String)
 
   case class FlowUnknown(name: String)
+
+  case class GetMessages(flowName: String)
+
+  case class AddMessage(flowName: String, text: String)
 
 }
 
@@ -70,6 +75,9 @@ class FlowFacade extends Actor with ActorLogging {
       sender() ! FlowUnknown(name)
     }
 
+    case GetMessages(name) => {
+      context.child(name).foreach(_.forward(Flow.GetMessages))
+    }
   }
 
   def removeFlow(name: String): Unit = {
@@ -78,8 +86,10 @@ class FlowFacade extends Actor with ActorLogging {
   }
 
   def addFlow(label: String): Unit = {
-    val myFlowDescriptor = FlowDescriptor(createName(label), label)
-    nameToFlow += createName(label) -> myFlowDescriptor
+    val flowName: String = createName(label)
+    val myFlowDescriptor = FlowDescriptor(flowName, label)
+    nameToFlow += flowName -> myFlowDescriptor
+    context.actorOf(Flow.props, flowName)
     sender() ! FlowAdded(myFlowDescriptor)
   }
 }
