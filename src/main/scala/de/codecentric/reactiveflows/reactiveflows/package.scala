@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.codecentric.reactive-flows
+package de.codecentric.reactiveflows
 
 package object reactiveflows {
 

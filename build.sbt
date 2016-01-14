@@ -33,4 +33,4 @@ scalariformPreferences := scalariformPreferences.value
   .setPreference(AlignSingleLineCaseStatements.MaxArrowIndent, 100)
   .setPreference(DoubleIndentClassDeclaration, true)
 
-headers := Map("scala" -> de.heikoseeberger.sbtheader.license.Apache2_0("2016", "Heiko Seeberger"))
+headers := Map("scala" -> de.heikoseeberger.sbtheader.license.Apache2_0("2016", "Marco Paga"))
